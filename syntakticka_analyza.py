@@ -60,7 +60,17 @@ def parse(input_tokens):
             top = stack.pop()
             print("Current top: " + top)
             print("Current stack: " + str(stack))
-        
+
+            if top == 'Z0':
+          # ~ TBD lebo toto je este zle :D dolar tam nema ostat uz je vela hodin sleepy tired brain
+                print(input_tokens)
+                # if we popped and z0 is on top and input_tokens is dollar, we are done
+                if input_tokens == ['$']:
+                    print("Accepted")
+                    break
+                else:
+                    print("Something went terribly wrong?")
+
         if current_token in terminals_symbols or current_token in terminals_alpha or current_token in terminals_digits:
             if current_token in terminals_symbols:
                 symbol = terminals_symbols[current_token]
@@ -102,6 +112,10 @@ def parse(input_tokens):
 
         if not input_tokens:
             input_tokens.append('$')
+    
+    # if we reached end of input but stack is not empty - reject the input
+    if not input_tokens and stack:
+        print("Rejected")
     
     # if we reach bottom of the stack (Z0) and input is empty, we are done
 
