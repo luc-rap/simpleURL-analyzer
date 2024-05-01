@@ -17,6 +17,7 @@ terminals_alpha = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "
 terminals_digits = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 
 
+
 non_terminals = ("url", "httpaddress", "ftpaddress", "telnetaddress", "mailtoaddress", "hostport", "httpaddr_1")
 
 rules = [
@@ -53,7 +54,7 @@ rules = [
     ["xalphas"], # 31
     ["xalpha segment"], # 32
     ["eps"], # 33
-    ["xalpha", "xalphas_1"], # 34
+    ["xalpha xalphas_1"], # 34
     ["xalphas"], # 35 
     ["eps"], # 36
     ["alpha"], # 37
@@ -74,26 +75,29 @@ parsing_table = {
     "ftpaddress": {"ftp": 11},
     "telnetaddress": {"telnet": 12},
     "mailtoaddress": {"mailto": 13},
-    "login": {terminals_alpha: 14, terminals_digits: 14},
+    "login": {'letter': 14, 'number': 14},
     "login_1": {"colon": 15, "at": 16},
-    "hostport": {terminals_alpha: 17, terminals_digits: 17},
+    "hostport": {'letter': 17, 'number': 17},
     "hostport_1": {"colon": 18, "slash": 19, "qmark": 19, "$": 19},
-    "hostname": {terminals_alpha: 20, terminals_digits: 20},
+    "hostname": {'letter': 20, 'number': 20},
     "hostname_1": {"slash": 22, "qmark": 22, "colon": 22, "dot": 21, "$": 22},
-    "port": {terminals_digits: 23},
-    "path": {"slash": 24, "qmark": 24, terminals_alpha: 24, terminals_digits: 24, "$": 24},
+    "port": {'number': 23},
+    "path": {"slash": 24, "qmark": 24, 'letter': 24, 'number': 24, "$": 24},
     "path_1": {"slash": 25, "qmark": 26, "$": 26},
-    "search": {terminals_alpha: 27, terminals_digits: 27},
+    "search": {'letter': 27, 'number': 27},
     "search_1": {"plus": 28, "$": 29},
-    "user": {terminals_alpha: 30, terminals_digits: 30},
-    "password": {terminals_alpha: 31, terminals_digits: 31},
-    "segment": {terminals_alpha: 32, terminals_digits: 32, "slash": 33, "qmark": 33, "$": 33},
-    "xalphas": {terminals_alpha: 34, terminals_digits: 34},
-    "xalphas_1": {"slash": 36, "qmark": 36, "plus": 36, "colon": 36, "at": 36, "dot": 36, "$": 35, terminals_alpha: 35, terminals_digits: 35},
-    "xalpha": {terminals_alpha: 37, terminals_digits: 38},
-    "digits": {terminals_digits: 39},
-    "digits_1": {terminals_digits: 40, "$": 41, "slash": 41, "qmark": 41},
-    "alpha": {terminals_alpha: 42},
-    "digit": {terminals_digits: 43}
+    "user": {'letter': 30, 'number': 30},
+    "password": {'letter': 31, 'number': 31},
+    "segment": {'letter': 32, 'number': 32, "slash": 33, "qmark": 33, "$": 33},
+    "xalphas": {'letter': 34, 'number': 34},
+    "xalphas_1": {"slash": 36, "qmark": 36, "plus": 36, "colon": 36, "at": 36, "dot": 36, "$": 36, 'letter': 35, 'number': 35},
+    "xalpha": {'letter': 37, 'number': 38},
+    "digits": {'number': 39},
+    "digits_1": {'number': 40, "$": 41, "slash": 41, "qmark": 41},
+    "alpha": {'letter': 42},
+    "digit": {'number': 43}
 
 }
+
+# terminals_alpha -> letter
+# terminals_digits -> number
