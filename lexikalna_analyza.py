@@ -60,7 +60,8 @@ try:
                 
             if next_state is not None:
 
-                if current_state == 'q0' and next_state in ['qH', 'qT', 'qT1'] or current_state == next_state:
+                if (current_state == 'q0' and next_state in ['qH', 'qT', 'qT1']) or (current_state == next_state) or (symbol == 'h' and next_state in ['qH']): #or (symbol == 't' and next_state in ['qT1']):
+                    print("Cleaning previous tokens, starting new token")
                     if current_token:
                         for i in current_token:
                             tokens.append(i)
