@@ -16,29 +16,209 @@ from automata.fa.dfa import DFA
 # 12. +
 
 dfa = DFA(
-    states={'q0', 'qH', 'qT', 'qT1', 'qE', 'qL', 'qN', 'qE2', 'qP', 'qT2', 'qF', 'qCOLON', 'qSLASH'},
-    input_symbols={'a', 'b', 'h', 't', 'p', 'e', 'l', 'n', ':', '/'},
+    states={ 
+        'qZly', 'q0', 'qCOLON', 'qSLASH', 'qA', 'qD',
+        'qH1', 'qH2', 'qH3', 'qH4',
+        'qT1', 'qT2', 'qT3', 'qT4', 'qT5', 'qT6', 
+        'qM1', 'qM2', 'qM3', 'qM4', 'qM5', 'qM6', 
+        'qF1', 'qF2', 'qF3'
+    },
+    input_symbols={
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        '/', '?', '@', ':', '.', '+'
+    },
     transitions={
-        'q0': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'q0', 'l':'q0', 'n':'q0', ':':'q0', '/':'q0'},
-        'qH': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT', 'p':'q0', 'e':'q0', 'l':'q0', 'n':'q0', ':':'q0', '/':'q0'},
-        'qT': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'q0', 'n':'q0', ':':'q0', '/':'q0'},
-        'qT1': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'q0', 'p':'qP', 'e':'qE', 'l':'q0', 'n':'q0', ':':'q0', '/':'q0'},
-        'qP': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT', 'p':'q0', 'e':'q0', 'l':'q0', 'n':'q0', ':':'qCOLON', '/':'q0'},
-        'qCOLON': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT', 'p':'q0', 'e':'q0', 'l':'q0', 'n':'q0', ':':'q0', '/':'qSLASH'},
-        'qSLASH': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT', 'p':'q0', 'e':'q0', 'l':'q0', 'n':'q0', ':':'q0', '/':'qF'},
-        'qF': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'q0', 'n':'q0', ':':'q0', '/':'q0'},
+        'q0': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qH1', 'f': 'qF1', 't': 'qT1', 'm': 'qM1', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
 
-        'qE': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'qL', 'n':'q0', ':':'q0', '/':'q0'},
-        'qL': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'q0', 'n':'qN', ':':'q0', '/':'q0'},
-        'qN': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE2', 'l':'q0', 'n':'qN', ':':'q0', '/':'q0'},
-        'qE2': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT2', 'p':'q0', 'e':'qE2', 'l':'q0', 'n':'qN', ':':'q0', '/':'q0'},
-        'qT2': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'q0', 'n':'q0', ':':'qCOLON', '/':'q0'},
-        'qCOLON': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'q0', 'n':'q0', ':':'q0', '/':'qSLASH'},
-        'qSLASH': {'a': 'q0', 'b': 'q0', 'h': 'qH', 't':'qT1', 'p':'q0', 'e':'qE', 'l':'q0', 'n':'q0', ':':'q0', '/':'qF'},
+        'qZly': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        }, 
+        'qCOLON': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qSLASH', '?':'qZly', '@':'qZly', ':':'qA', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qSLASH': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qA', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qA': {
+            'A':'qA', 'B':'qA', 'C':'qA', 'D':'qA', 'E':'qA', 'F':'qA', 'G':'qA', 'H':'qA', 'I':'qA', 'J':'qA', 'K':'qA', 'L':'qA', 'M':'qA', 'N':'qA', 'O':'qA', 'P':'qA', 'Q':'qA', 'R':'qA', 'S':'qA', 'T':'qA', 'U':'qA', 'V':'qA', 'W':'qA', 'X':'qA', 'Y':'qA', 'Z':'qA', 
+            'b':'qA', 'c':'qA', 'd':'qA', 'g':'qA', 'j':'qA', 'k':'qA', 'q':'qA', 'r':'qA', 's':'qA', 'u':'qA', 'v':'qA', 'w':'qA', 'x':'qA', 'y':'qA', 'z':'qA',
+            '0':'qA', '1':'qA', '2':'qA', '3':'qA', '4':'qA', '5':'qA', '6':'qA', '7':'qA', '8':'qA', '9':'qA',
+            '/':'qD', '?':'qD', '@':'qD', ':':'qD', '.':'qD', '+':'qD',
+            'h': 'qA', 'f': 'qA', 't': 'qA', 'm': 'qA', 'p': 'qA', 'e':'qA', 'l':'qA', 'n':'qA', 'a':'qA', 'i':'qA', 'o':'qA',          
+        }, 
+        'qD': {
+            'A':'qA', 'B':'qA', 'C':'qA', 'D':'qA', 'E':'qA', 'F':'qA', 'G':'qA', 'H':'qA', 'I':'qA', 'J':'qA', 'K':'qA', 'L':'qA', 'M':'qA', 'N':'qA', 'O':'qA', 'P':'qA', 'Q':'qA', 'R':'qA', 'S':'qA', 'T':'qA', 'U':'qA', 'V':'qA', 'W':'qA', 'X':'qA', 'Y':'qA', 'Z':'qA', 
+            'b':'qA', 'c':'qA', 'd':'qA', 'g':'qA', 'j':'qA', 'k':'qA', 'q':'qA', 'r':'qA', 's':'qA', 'u':'qA', 'v':'qA', 'w':'qA', 'x':'qA', 'y':'qA', 'z':'qA',
+            '0':'qA', '1':'qA', '2':'qA', '3':'qA', '4':'qA', '5':'qA', '6':'qA', '7':'qA', '8':'qA', '9':'qA',
+            '/':'qD', '?':'qD', '@':'qD', ':':'qD', '.':'qD', '+':'qD',
+            'h': 'qA', 'f': 'qA', 't': 'qA', 'm': 'qA', 'p': 'qA', 'e':'qA', 'l':'qA', 'n':'qA', 'a':'qA', 'i':'qA', 'o':'qA',     
+        },
+
+        'qH1': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qH2', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qH2': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qH3', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qH3': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qH4', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qH4': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qCOLON', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+
+        'qT1': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qT2', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',      
+        },
+        'qT2': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qT3', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qT3': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qT4', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qT4': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qT5', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qT5': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qT6', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qT6': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qCOLON', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        }, 
+        
+        'qM1': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qM2', 'i':'qZly', 'o':'qZly',      
+        },
+        'qM2': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qM3', 'o':'qZly',  
+        },
+        'qM3': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qM4', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qM4': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qM5', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qM5': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qM6',  
+        },
+        'qM6': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qCOLON', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        }, 
+        
+        'qF1': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qF2', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qF2': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qF3', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        
+        },
+        'qF3': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qCOLON', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        }
     },
     initial_state='q0',
-    final_states={'q0', 'qF'}
+    final_states={'qA', 'qD', 'qZly'}
 )
+
+# todo: zotavenie 1 == odstranenie chybneho znaku (break -> continue)
+# todo: zotavenie 2 == doplnenie chybajuceho znaku (http:/google.com -> http://google.com)
+# todo: vypinac / zapinac zotaveni
 
 try:
     while True:
@@ -53,45 +233,50 @@ try:
                 print("Current state: " + current_state)
                 print("Next state: " + next_state)
             else:
+                if current_token != '':
+                    tokens.append(current_token)
                 next_state = None
+                current_state = 'qZly'
                 print("Rejected")
                 print("Invalid symbol found: " + symbol)    
                 break
                 
             if next_state is not None:
-
-                if (current_state == 'q0' and next_state in ['qH', 'qT', 'qT1']) or (current_state == next_state) or (symbol == 'h' and next_state in ['qH']): #or (symbol == 't' and next_state in ['qT1']):
-                    print("Cleaning previous tokens, starting new token")
-                    if current_token:
-                        for i in current_token:
-                            tokens.append(i)
-
-                    current_token = ''
-                current_state = next_state
-
-                if current_state == 'qF':
-                    # Precitali sme telnet 
+                
+                # we arrived at the start of any protocol
+                #current_token += symbol # <- len citame vstup a ukladame znaky ktore chodia 
+                # add a symbol if it's not a delimiter
+                if next_state != 'qD':
+                    print(f"next state: {current_state} --- Appendujeme")
                     current_token += symbol
-                    print("We found fancy token")
                     print(current_token)
+                
+                if current_state in ['qCOLON', 'qSLASH'] and next_state == 'qA':
+                    print("Precitali sme protokol")
+                    tokens.append(current_token)  # todo: something something protocol vs name ? ([list] for possible tokens)
+                    print(f"Tokens: {tokens}")
+                    current_token = ''
+            
+                elif next_state == 'qD':
+                    print("next_state == qD, Tokenizujeme")
                     tokens.append(current_token)
-                    print(tokens)
-                    print("---------")
+                    tokens.append(symbol)
+                    print(f"Tokens: {tokens}")
                     current_token = ''
-                else:
-                    # Ak sme niekde inde, tak len pridame symbol do tokenu
-                    current_token += symbol
-                    print("Appending token...")
-                    print(current_token)
+        
+            current_state = next_state
+                
+        # we've finished reading the entire input
+        if current_state == 'qA' and current_token != '':
+            tokens.append(current_token)
 
-        if current_token:
-            if current_state in dfa.final_states:
-            # Ak sme skoncili citat a mame nejaky token, tak ho pridame do zoznamu
-                for i in current_token:
-                    tokens.append(i)
-                print(tokens)
-            else:
-                print("Rejected")
-
+        if current_state in ['qA', 'qD']:
+            print(f"Input akceptovany - current_state == {current_state}")
+        
+        else:
+            print("Input redžektovaný :(")
+        
+        print(tokens)
+                
 except KeyboardInterrupt:
     print('')
