@@ -246,7 +246,7 @@ try:
                 # we arrived at the start of any protocol
                 #current_token += symbol # <- len citame vstup a ukladame znaky ktore chodia 
                 # add a symbol if it's not a delimiter
-                if next_state != 'qD':
+                if next_state != 'qD' or next_state != 'qA':
                     print(f"next state: {current_state} --- Appendujeme")
                     current_token += symbol
                     print(current_token)
@@ -257,19 +257,15 @@ try:
                     print(f"Tokens: {tokens}")
                     current_token = ''
             
-                elif next_state == 'qD':
+                elif next_state == 'qD' or next_state == 'qA':
                     print("next_state == qD, Tokenizujeme")
-                    tokens.append(current_token)
+                    #tokens.append(current_token)
                     tokens.append(symbol)
                     print(f"Tokens: {tokens}")
                     current_token = ''
         
             current_state = next_state
                 
-        # we've finished reading the entire input
-        if current_state == 'qA' and current_token != '':
-            tokens.append(current_token)
-
         if current_state in ['qA', 'qD']:
             print(f"Input akceptovany - current_state == {current_state}")
         

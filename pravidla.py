@@ -16,56 +16,57 @@ terminals_alpha = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "
 
 terminals_digits = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 
-
-
 non_terminals = ("url", "httpaddress", "ftpaddress", "telnetaddress", "mailtoaddress", "hostport", "httpaddr_1")
 
 rules = [
-    ["httpaddress"], # 1
-    ["ftpaddress "], # 2
-    ["telnetaddress"], # 3
-    ["mailtoaddress"], # 4
-    ["http hostport httpaddr_1"], # 5
-    ["slash path httpaddr_2"], # 6
-    ["qmark search"], # 7
-    ["eps"], # 8
-    ["qmark search"], # 9
-    ["eps"], # 10
-    ["ftp login slash path"], # 11
-    ["telnet login"], # 12
-    ["mailto xalphas at hostname"], # 13
-    ["user login_1"], # 14
-    ["colon password at hostport"], # 15
-    ["at hostport"], # 16
-    ["hostname hostport_1"], # 17
-    ["colon port"], # 18
-    ["eps"], # 19
-    ["xalphas hostname_1"], # 20
-    ["dot hostname"], # 21
-    ["eps"], # 22
-    ["digits"], # 23
-    ["segment path_1"], # 24
-    ["slash path"], # 25
-    ["eps"], # 26
-    ["xalphas search_1"], # 27
-    ["plus search"], # 28 
-    ["eps"], # 29
-    ["xalphas"], # 30
-    ["xalphas"], # 31
-    ["xalpha segment"], # 32
-    ["eps"], # 33
-    ["xalpha xalphas_1"], # 34
-    ["xalphas"], # 35 
-    ["eps"], # 36
-    ["alpha"], # 37
-    ["digit"], # 38
-    ["digit digits_1"], # 39
-    ["digits"], # 40
-    ["eps"], # 41
+    "httpaddress", # 1
+    "ftpaddress ", # 2
+    "telnetaddress", # 3
+    "mailtoaddress", # 4
+    "http hostport httpaddr_1", # 5
+    "slash path httpaddr_2", # 6
+    "qmark search", # 7
+    "eps", # 8
+    "qmark search", # 9
+    "eps", # 10
+    "ftp login slash path", # 11
+    "telnet login", # 12
+    "mailto xalphas at hostname", # 13
+    "user login_1", # 14
+    "colon password at hostport", # 15
+    "at hostport", # 16
+    "hostname hostport_1", # 17
+    "colon port", # 18
+    "eps", # 19
+    "xalphas hostname_1", # 20
+    "dot hostname", # 21
+    "eps", # 22
+    "digits", # 23
+    "segment path_1", # 24
+    "slash path", # 25
+    "eps", # 26
+    "xalphas search_1", # 27
+    "plus search", # 28 
+    "eps", # 29
+    "xalphas", # 30
+    "xalphas", # 31
+    "xalpha segment", # 32
+    "eps", # 33
+    "xalpha xalphas_1", # 34
+    "xalphas", # 35 
+    "eps", # 36
+    "alpha", # 37
+    "digit", # 38
+    "digit digits_1", # 39
+    "digits", # 40
+    "eps", # 41
     terminals_alpha, # 42
     terminals_digits # 43
-
 ]
+
+# since there's so many letters and numbers, instead of writing them all manually in the rules we replaced them with placeholders
+# terminals_alpha -> letter
+# terminals_digits -> number
 
 parsing_table = {
     "url": {"http": 1, "ftp": 2, "telnet": 3, "mailto": 4},
@@ -96,8 +97,4 @@ parsing_table = {
     "digits_1": {'number': 40, "$": 41, "slash": 41, "qmark": 41},
     "alpha": {'letter': 42},
     "digit": {'number': 43}
-
 }
-
-# terminals_alpha -> letter
-# terminals_digits -> number
