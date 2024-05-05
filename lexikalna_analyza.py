@@ -1,6 +1,46 @@
 # pip install automata-lib
 from automata.fa.dfa import DFA
 
+examples_correct = {
+    0: 'http://google',
+    1: 'http://google.com',
+    2: 'http://123sj.sk/path/file?search+hello',
+    3: 'ftp://lucien@vanhohenheim.fr/islands',
+    4: 'ftp://lucien:password@hostport/why',
+    5: 'http://fiit.stuba.sk',
+    6: 'telnet://lucia:password@gmail.com',
+    12: 'mailto::sofia@shatokhina',
+    7: 'mailto::lucia@rapanova.com',
+    8: 'http://abc.abc/whatever/whatever?hladanie+hladanie+zase',
+    9: 'http://youtu.be/dQw4w9WgXcQ',
+    10: 'http://hostname:12345',
+    11: 'telnet://lucien:password@vanhohenheim:13111988',
+    13: 'http://softverovejazyky:2324/su/najlepsi/predmet/na/svete/frfr'
+}
+
+examples_wrong_lexical = {
+    0: 'http:/',
+    1: 'http:/google.com',
+    2: 'akjsdkfj',
+    3: '°˖✧◝(⁰▿⁰)◜✧˖° ٩(｡•́‿•̀｡)۶ *:･ﾟ✧',   
+    4: 'telnet::lucien'
+}
+
+examples_wrong_syntax = {
+    0: 'http://google.',
+    1: 'mailto::lucien',
+    2: 'telnet://vanhohenheim',
+    3: 'http://website.com?search/wrongorder',
+    4: 'ftp://lucien:@hostport',
+    5: 'ftp://lucien:password',
+    6: 'http://hostname:port',
+    7: 'ftp://:lucien@gmail.com',
+    8: 'telnet://lucien:password@vanhoheinheim:1311.1988',
+    9: 'ftp://cantsearchthis.com/donttrythisathome?howtopassschoolandnotpassaway',
+    10: 'ftp://lucien@vanhohenheim.fr/islands/',
+    11: 'ftp://lucien:password@hostport'
+}
+
 # Define DFA which accepts:
 # 1. All letters a...Z 
 # 2. All digits 0...9
@@ -17,7 +57,7 @@ from automata.fa.dfa import DFA
 
 dfa = DFA(
     states={ 
-        'qZly', 'q0', 'qCOLON', 'qSLASH', 'qA', 'qD',
+        'qZly', 'q0', 'qCOLON', 'qCOLONmailto', 'qSLASH', 'qA', 'qD',
         'qH1', 'qH2', 'qH3', 'qH4',
         'qT1', 'qT2', 'qT3', 'qT4', 'qT5', 'qT6', 
         'qM1', 'qM2', 'qM3', 'qM4', 'qM5', 'qM6', 
@@ -49,7 +89,14 @@ dfa = DFA(
             'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
             'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
             '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
-            '/':'qSLASH', '?':'qZly', '@':'qZly', ':':'qA', '.':'qZly', '+':'qZly',
+            '/':'qSLASH', '?':'qZly', '@':'qZly', ':':'qZly', '.':'qZly', '+':'qZly',
+            'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
+        },
+        'qCOLONmailto': {
+            'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
+            'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
+            '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qA', '.':'qZly', '+':'qZly',
             'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
         },
         'qSLASH': {
@@ -185,7 +232,7 @@ dfa = DFA(
             'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
             'b':'qZly', 'c':'qZly', 'd':'qZly', 'g':'qZly', 'j':'qZly', 'k':'qZly', 'q':'qZly', 'r':'qZly', 's':'qZly', 'u':'qZly', 'v':'qZly', 'w':'qZly', 'x':'qZly', 'y':'qZly', 'z':'qZly',
             '0':'qZly', '1':'qZly', '2':'qZly', '3':'qZly', '4':'qZly', '5':'qZly', '6':'qZly', '7':'qZly', '8':'qZly', '9':'qZly',
-            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qCOLON', '.':'qZly', '+':'qZly',
+            '/':'qZly', '?':'qZly', '@':'qZly', ':':'qCOLONmailto', '.':'qZly', '+':'qZly',
             'h': 'qZly', 'f': 'qZly', 't': 'qZly', 'm': 'qZly', 'p': 'qZly', 'e':'qZly', 'l':'qZly', 'n':'qZly', 'a':'qZly', 'i':'qZly', 'o':'qZly',  
         }, 
         
@@ -219,11 +266,13 @@ dfa = DFA(
 # todo: zotavenie 1 == odstranenie chybneho znaku (break -> continue)
 # todo: zotavenie 2 == doplnenie chybajuceho znaku (http:/google.com -> http://google.com)
 # todo: vypinac / zapinac zotaveni
+# todo: break out of the loop immediately when we stumble upon qZly (so it doesn't run til the end of the string)
 
 try:
     while True:
         tokens = []
-        user_input = input('Please enter your input: ')
+        user_input = int(input('Please enter the example id: '))
+        user_input = examples_correct[user_input]
         current_state = 'q0'
         current_token = ''
         for symbol in user_input:
@@ -242,7 +291,6 @@ try:
                 break
                 
             if next_state is not None:
-                
                 # we arrived at the start of any protocol
                 #current_token += symbol # <- len citame vstup a ukladame znaky ktore chodia 
                 # add a symbol if it's not a delimiter
@@ -251,7 +299,7 @@ try:
                     current_token += symbol
                     print(current_token)
                 
-                if current_state in ['qCOLON', 'qSLASH'] and next_state == 'qA':
+                if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA':
                     print("Precitali sme protokol")
                     tokens.append(current_token)  # todo: something something protocol vs name ? ([list] for possible tokens)
                     print(f"Tokens: {tokens}")
