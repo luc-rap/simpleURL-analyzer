@@ -20,7 +20,7 @@ non_terminals = ("url", "httpaddress", "ftpaddress", "telnetaddress", "mailtoadd
 
 rules = [
     "httpaddress", # 1
-    "ftpaddress ", # 2
+    "ftpaddress", # 2
     "telnetaddress", # 3
     "mailtoaddress", # 4
     "http hostport httpaddr_1", # 5

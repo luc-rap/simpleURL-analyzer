@@ -1,6 +1,17 @@
 from collections import deque
 from pravidla import * 
 
+examples_wrong_syntax = {
+    0: ['http://', 'g', 'o', 'o', 'g', 'l', 'e', '.'],
+    1: ['mailto::', 'l', 'u', 'c', 'i', 'e', 'n'],
+    2: ['telnet:/', 'v', 'a', 'n', 'h', 'o', 'h', 'e', 'n', 'h', 'e', 'i', 'm'],
+    3: ['http://', '1', '2', '3', 's', 'j', '.', 's', 'k', '/', 'p', 'a', 't', 'h', '/', 'f', 'i', 'l', 'e', '?', 's', 'e', 'a', 'r', 'c', 'h', '+', 'h', 'e', 'l', 'l', 'o'],
+    4: ['telnet://', 'l', 'u', 'c', 'i', 'e', 'n', ':', 'p', 'a', 's', 's', 'w', 'o', 'r', 'd', '@', 'v', 'a', 'n', 'h', 'o', 'h', 'e', 'n', 'h', 'e', 'i', 'm', ':', '1', '3', '1', '1', '1', '9', '8', '8'],
+    5: ['ftp://', 'l', 'u', 'c', 'i', 'e', 'n', '@', 'v', 'a', 'n', 'h', 'o', 'h', 'e', 'n', 'h', 'e', 'i', 'm', '.', 'f', 'r', '/', 'i', 's', 'l', 'a', 'n', 'd', 's'],
+    6: ['ftp://', 'l', 'u', 'c', 'i', 'e', 'n', ':', 'p', 'a', 's', 's', 'w', 'o', 'r', 'd', '@', 'h', 'o', 's', 't', 'p', 'o', 'r', 't', '/'] ,
+    7: ['mailto::', 'l', 'u', 'c', 'i', 'a', '@', 'r', 'a', 'p', 'a', 'n', 'o', 'v', 'a', '.', 'c', 'o', 'm']
+}
+
 stack = deque()
 
 start = 'url'
@@ -8,7 +19,7 @@ start = 'url'
 stack.append('Z0') # spodok zasobnika
 stack.append(start) # startovaci symbol
 
-input_tokens = ['http://', 'g', 'o', 'o', 'g', 'l', 'e', '.', 'c', 'o', 'm', '/']
+input_tokens = examples_wrong_syntax[int(input('Please enter the input tokens id: '))]
 
 # todo: osetrit nespravny vstup
 
