@@ -268,59 +268,58 @@ dfa = DFA(
 # todo: vypinac / zapinac zotaveni
 # todo: break out of the loop immediately when we stumble upon qZly (so it doesn't run til the end of the string)
 
-try:
-    while True:
-        tokens = []
-        user_input = int(input('Please enter the example id: '))
-        user_input = examples_correct[user_input]
-        current_state = 'q0'
-        current_token = ''
-        for symbol in user_input:
-            print("Currently reading: " + symbol)
-            if symbol in dfa.input_symbols:
-                next_state = dfa.transitions[current_state].get(symbol)
-                print("Current state: " + current_state)
-                print("Next state: " + next_state)
-            else:
-                if current_token != '':
-                    tokens.append(current_token)
-                next_state = None
-                current_state = 'qZly'
-                print("Rejected")
-                print("Invalid symbol found: " + symbol)    
-                break
-                
-            if next_state is not None:
-                # we arrived at the start of any protocol
-                #current_token += symbol # <- len citame vstup a ukladame znaky ktore chodia 
-                # add a symbol if it's not a delimiter
-                if next_state != 'qD' or next_state != 'qA':
-                    print(f"next state: {current_state} --- Appendujeme")
-                    current_token += symbol
-                    print(current_token)
-                
-                if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA':
-                    print("Precitali sme protokol")
-                    tokens.append(current_token)  # todo: something something protocol vs name ? ([list] for possible tokens)
-                    print(f"Tokens: {tokens}")
-                    current_token = ''
-            
-                elif next_state == 'qD' or next_state == 'qA':
-                    print("next_state == qD, Tokenizujeme")
-                    #tokens.append(current_token)
-                    tokens.append(symbol)
-                    print(f"Tokens: {tokens}")
-                    current_token = ''
-        
-            current_state = next_state
-                
-        if current_state in ['qA', 'qD']:
-            print(f"Input akceptovany - current_state == {current_state}")
-        
+
+def tokenize(user_input, dfa):
+    tokens = []
+    #user_input = int(input('Please enter the example id: '))
+    #user_input = examples_correct[user_input]
+    current_state = 'q0'
+    current_token = ''
+    for symbol in user_input:
+        print("Currently reading: " + symbol)
+        if symbol in dfa.input_symbols:
+            next_state = dfa.transitions[current_state].get(symbol)
+            print("Current state: " + current_state)
+            print("Next state: " + next_state)
         else:
-            print("Input redžektovaný :(")
+            if current_token != '':
+                tokens.append(current_token)
+            next_state = None
+            current_state = 'qZly'
+            print("Rejected")
+            print("Invalid symbol found: " + symbol)    
+            break
+            
+        if next_state is not None:
+            # we arrived at the start of any protocol
+            #current_token += symbol # <- len citame vstup a ukladame znaky ktore chodia 
+            # add a symbol if it's not a delimiter
+            if next_state != 'qD' or next_state != 'qA':
+                print(f"next state: {current_state} --- Appendujeme")
+                current_token += symbol
+                print(current_token)
+            
+            if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA':
+                print("Precitali sme protokol")
+                tokens.append(current_token)  # todo: something something protocol vs name ? ([list] for possible tokens)
+                print(f"Tokens: {tokens}")
+                current_token = ''
         
-        print(tokens)
+            elif next_state == 'qD' or next_state == 'qA':
+                print("next_state == qD, Tokenizujeme")
+                #tokens.append(current_token)
+                tokens.append(symbol)
+                print(f"Tokens: {tokens}")
+                current_token = ''
+    
+        current_state = next_state
+            
+    if current_state in ['qA', 'qD']:
+        print(f"Input akceptovany - current_state == {current_state}")
+        return tokens
+    
+    else:
+        print("Input redžektovaný :(")
+        return None
+    
                 
-except KeyboardInterrupt:
-    print('')
