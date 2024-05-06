@@ -37,8 +37,12 @@ def get_terminal(current_token):
         return 'something has gone horribly wrong o_o'
     
 
-def parse(input_tokens):
-
+def parse(input_tokens, recovery_mode=None):
+    if recovery_mode:
+        print("Zotavovanie z chyb je zapnute")
+        print(recovery_mode)
+    else:
+        print("Zotavovanie z chyb je vypnute")
     stack = deque()
     start = 'url'
     stack.append('Z0') # spodok zasobnika
@@ -87,6 +91,7 @@ def parse(input_tokens):
             print('Rejected')
             print(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
             break
+
         rule_number = parsing_table[top][token]
         rule = rules[rule_number - 1]
         print(f'RULES\nTop - {top} / Token - {token} / Rule number - {rule_number} / Rule - {rule}')
