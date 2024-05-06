@@ -295,6 +295,11 @@ def tokenize(user_input, dfa, recovery_mode=None):
                 tokens.append(current_token) 
                 print(f"Tokens: {tokens}")
                 current_token = ''
+            
+            # error recovery mode 2 - insert pridanie chybajuce znaku do protocolu
+            # ak sme v qCOLON a next je qZLY, tak pridame / a pokracujeme... nieco na ten styl? 
+            # if recovery_mode == "insert":
+            #   pass 
         
             elif next_state == 'qA': # uz sme precitali protokol a uz len citame jednotlive znaky a ukladame ich po jednom ako tokeny 
                 print("next_state == qA, Tokenizujeme")
