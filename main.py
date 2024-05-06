@@ -32,8 +32,8 @@ def main():
                 print("Vstup bol rejected\n")
                 continue
             print(f"Tokenizovany vstup: {tokens}")
-            print("SYNTAKTICKA ANALYZA\n")
-            parse(tokens, recovery_mode=recovery_mode)
+            #print("SYNTAKTICKA ANALYZA\n")
+            #parse(tokens, recovery_mode=recovery_mode)
         except KeyboardInterrupt:
             print("\nProgram bol ukonceny")
             break
