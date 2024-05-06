@@ -249,7 +249,12 @@ dfa = DFA(
 # todo: break out of the loop immediately when we stumble upon qZly (so it doesn't run til the end of the string)
 
 
-def tokenize(user_input, dfa):
+def tokenize(user_input, dfa, recovery_mode=None):
+    if recovery_mode:
+        print("Zotavovanie z chyb je zapnute")
+        print(recovery_mode)
+    else:
+        print("Zotavovanie z chyb je vypnute")
     tokens = []
     #user_input = int(input('Please enter the example id: '))
     #user_input = examples_correct[user_input]
