@@ -41,23 +41,10 @@ examples_wrong_syntax = {
     11: 'ftp://lucien:password@hostport'
 }
 
-# Define DFA which accepts:
-# 1. All letters a...Z 
-# 2. All digits 0...9
-# 3. http://
-# 4. ftp://
-# 5. telnet://
-# 6. mailto:
-# 7. /
-# 8. ?
-# 9. @
-# 10. .
-# 11. :
-# 12. +
 
 dfa = DFA(
     states={ 
-        'qZly', 'q0', 'qCOLON', 'qCOLONmailto', 'qSLASH', 'qA', 'qD',
+        'qZly', 'q0', 'qCOLON', 'qCOLONmailto', 'qSLASH', 'qA',
         'qH1', 'qH2', 'qH3', 'qH4',
         'qT1', 'qT2', 'qT3', 'qT4', 'qT5', 'qT6', 
         'qM1', 'qM2', 'qM3', 'qM4', 'qM5', 'qM6', 
@@ -110,16 +97,9 @@ dfa = DFA(
             'A':'qA', 'B':'qA', 'C':'qA', 'D':'qA', 'E':'qA', 'F':'qA', 'G':'qA', 'H':'qA', 'I':'qA', 'J':'qA', 'K':'qA', 'L':'qA', 'M':'qA', 'N':'qA', 'O':'qA', 'P':'qA', 'Q':'qA', 'R':'qA', 'S':'qA', 'T':'qA', 'U':'qA', 'V':'qA', 'W':'qA', 'X':'qA', 'Y':'qA', 'Z':'qA', 
             'b':'qA', 'c':'qA', 'd':'qA', 'g':'qA', 'j':'qA', 'k':'qA', 'q':'qA', 'r':'qA', 's':'qA', 'u':'qA', 'v':'qA', 'w':'qA', 'x':'qA', 'y':'qA', 'z':'qA',
             '0':'qA', '1':'qA', '2':'qA', '3':'qA', '4':'qA', '5':'qA', '6':'qA', '7':'qA', '8':'qA', '9':'qA',
-            '/':'qD', '?':'qD', '@':'qD', ':':'qD', '.':'qD', '+':'qD',
+            '/':'qA', '?':'qA', '@':'qA', ':':'qA', '.':'qA', '+':'qA',
             'h': 'qA', 'f': 'qA', 't': 'qA', 'm': 'qA', 'p': 'qA', 'e':'qA', 'l':'qA', 'n':'qA', 'a':'qA', 'i':'qA', 'o':'qA',          
         }, 
-        'qD': {
-            'A':'qA', 'B':'qA', 'C':'qA', 'D':'qA', 'E':'qA', 'F':'qA', 'G':'qA', 'H':'qA', 'I':'qA', 'J':'qA', 'K':'qA', 'L':'qA', 'M':'qA', 'N':'qA', 'O':'qA', 'P':'qA', 'Q':'qA', 'R':'qA', 'S':'qA', 'T':'qA', 'U':'qA', 'V':'qA', 'W':'qA', 'X':'qA', 'Y':'qA', 'Z':'qA', 
-            'b':'qA', 'c':'qA', 'd':'qA', 'g':'qA', 'j':'qA', 'k':'qA', 'q':'qA', 'r':'qA', 's':'qA', 'u':'qA', 'v':'qA', 'w':'qA', 'x':'qA', 'y':'qA', 'z':'qA',
-            '0':'qA', '1':'qA', '2':'qA', '3':'qA', '4':'qA', '5':'qA', '6':'qA', '7':'qA', '8':'qA', '9':'qA',
-            '/':'qD', '?':'qD', '@':'qD', ':':'qD', '.':'qD', '+':'qD',
-            'h': 'qA', 'f': 'qA', 't': 'qA', 'm': 'qA', 'p': 'qA', 'e':'qA', 'l':'qA', 'n':'qA', 'a':'qA', 'i':'qA', 'o':'qA',     
-        },
 
         'qH1': {
             'A':'qZly', 'B':'qZly', 'C':'qZly', 'D':'qZly', 'E':'qZly', 'F':'qZly', 'G':'qZly', 'H':'qZly', 'I':'qZly', 'J':'qZly', 'K':'qZly', 'L':'qZly', 'M':'qZly', 'N':'qZly', 'O':'qZly', 'P':'qZly', 'Q':'qZly', 'R':'qZly', 'S':'qZly', 'T':'qZly', 'U':'qZly', 'V':'qZly', 'W':'qZly', 'X':'qZly', 'Y':'qZly', 'Z':'qZly', 
@@ -260,7 +240,7 @@ dfa = DFA(
         }
     },
     initial_state='q0',
-    final_states={'qA', 'qD', 'qZly'}
+    final_states={'qA', 'qZly'}
 )
 
 # todo: zotavenie 1 == odstranenie chybneho znaku (break -> continue)
@@ -290,31 +270,29 @@ def tokenize(user_input, dfa):
             print("Invalid symbol found: " + symbol)    
             break
             
-        if next_state is not None:
-            # we arrived at the start of any protocol
-            #current_token += symbol # <- len citame vstup a ukladame znaky ktore chodia 
-            # add a symbol if it's not a delimiter
-            if next_state != 'qD' or next_state != 'qA':
+        if next_state is not None: # kym stale citame vstup 
+
+            if next_state != 'qA': # citame protokol az kym nenarazime na qA
                 print(f"next state: {current_state} --- Appendujeme")
-                current_token += symbol
+                current_token += symbol # znaky protokolu appendujeme do current_token
                 print(current_token)
             
-            if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA':
+            if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA': # precitali sme protokol, znaky ulozime ako jeden token
                 print("Precitali sme protokol")
-                tokens.append(current_token)  # todo: something something protocol vs name ? ([list] for possible tokens)
+                current_token += symbol
+                tokens.append(current_token) 
                 print(f"Tokens: {tokens}")
                 current_token = ''
         
-            elif next_state == 'qD' or next_state == 'qA':
-                print("next_state == qD, Tokenizujeme")
-                #tokens.append(current_token)
+            elif next_state == 'qA': # uz sme precitali protokol a uz len citame jednotlive znaky a ukladame ich po jednom ako tokeny 
+                print("next_state == qA, Tokenizujeme")
                 tokens.append(symbol)
                 print(f"Tokens: {tokens}")
                 current_token = ''
     
         current_state = next_state
             
-    if current_state in ['qA', 'qD']:
+    if current_state in ['qA']: # ak nemame dalsie znaky na vstupe a sme vo finalnom stave, tak sme skoncili a akceptujeme vstup ako spravny 
         print(f"Input akceptovany - current_state == {current_state}")
         return tokens
     
