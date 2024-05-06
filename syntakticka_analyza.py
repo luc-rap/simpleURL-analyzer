@@ -12,14 +12,8 @@ examples_wrong_syntax = {
     7: ['mailto::', 'l', 'u', 'c', 'i', 'a', '@', 'r', 'a', 'p', 'a', 'n', 'o', 'v', 'a', '.', 'c', 'o', 'm']
 }
 
-stack = deque()
 
-start = 'url'
-
-stack.append('Z0') # spodok zasobnika
-stack.append(start) # startovaci symbol
-
-input_tokens = examples_wrong_syntax[int(input('Please enter the input tokens id: '))]
+# input_tokens = examples_wrong_syntax[int(input('Please enter the input tokens id: '))]
 
 # todo: osetrit nespravny vstup
 
@@ -44,6 +38,11 @@ def get_terminal(current_token):
     
 
 def parse(input_tokens):
+
+    stack = deque()
+    start = 'url'
+    stack.append('Z0') # spodok zasobnika
+    stack.append(start) # startovaci symbol
     input_tokens.append('$')
     current_token = input_tokens.pop(0)  # ktory token prave citame zo vstupu:
     print(f'INITIAL INFO\nstack - {str(stack)} / token - {current_token}')
@@ -83,6 +82,11 @@ def parse(input_tokens):
             break
 
         # get the rule from the rules dictionary
+        # if rule_number = parsing_table[top][token] doesn't exist, it means the input is invalid
+        if top not in parsing_table or token not in parsing_table[top]:
+            print('Rejected')
+            print(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
+            break
         rule_number = parsing_table[top][token]
         rule = rules[rule_number - 1]
         print(f'RULES\nTop - {top} / Token - {token} / Rule number - {rule_number} / Rule - {rule}')
@@ -109,5 +113,3 @@ def parse(input_tokens):
 
     print(f'we\'re at the end of the function yay yippee')
     
-
-parse(input_tokens)
