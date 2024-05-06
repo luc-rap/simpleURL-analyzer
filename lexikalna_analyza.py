@@ -267,13 +267,20 @@ def tokenize(user_input, dfa, recovery_mode=None):
             print("Current state: " + current_state)
             print("Next state: " + next_state)
         else:
-            if current_token != '':
-                tokens.append(current_token)
-            next_state = None
-            current_state = 'qZly'
-            print("Rejected")
-            print("Invalid symbol found: " + symbol)    
-            break
+            #if current_token != '':
+            #    tokens.append(current_token)
+
+            print("Invalid symbol found: " + symbol)
+            if recovery_mode == "ignore":
+                print("Skipping incorrect symbol...")
+                print(f"Tokens: {tokens}")
+                continue
+            else:
+                next_state = None
+                current_state = 'qZly'
+                print("Rejected")
+                print(f"Tokens: {tokens}")
+                break
             
         if next_state is not None: # kym stale citame vstup 
 
