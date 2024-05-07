@@ -88,9 +88,26 @@ def parse(input_tokens, recovery_mode=None):
         # get the rule from the rules dictionary
         # if rule_number = parsing_table[top][token] doesn't exist, it means the input is invalid
         if top not in parsing_table or token not in parsing_table[top]:
-            print('Rejected')
-            print(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
-            break
+            # ! ERROR RECOVERY MODE 3 - skip characters unti
+            if recovery_mode == 'panic':
+                print('we panic')
+                # if top == 'search_1':  # because we might want to do specific stuff for specific rules ??
+                    
+                while token not in parsing_table[top] and input_tokens:
+                    print(f'token - {token} / current - {current_token} / input tokens: {input_tokens}')
+                    current_token = input_tokens.pop(0)
+                    token = get_terminal(current_token)
+                print('we stopped panic')
+                # continue
+            
+            # todo: this is changed jic
+            if not recovery_mode or not input_tokens:
+                print(f'input tokens {input_tokens}')
+                print('Rejected')
+                print(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
+                break
+        
+        print('after recoveryyyyyyyyyyyyyyyyyyyy')
 
         rule_number = parsing_table[top][token]
         rule = rules[rule_number - 1]
