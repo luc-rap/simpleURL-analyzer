@@ -7,7 +7,7 @@ def main():
         try:
             print("Lexikalny a syntakticky analyzator\n")
             print("Mod Zotavenia z chyb: \n")
-            print("Napiste 1, ak chcete zotavit chybu v lexikalnej analyze pomocou ignorovania chybnych znakov\n")
+            print("Napiste 1, ak chcete zotavit chybu v lexikalnej analyze pomocou preskocenia chybnych znakov\n")
             print("Napiste 2, ak chcete zotavit chybu v lexikalnej analyze pomocou pridania ocakavanych znakov\n")
             print("Napiste 3, ak chcete zotavit chybu v syntaktickej analyze pomocou Panic-Mode Recovery\n")
             print("Napiste 4, ak chcete zotavit chybu v syntaktickej analyze pomocou Phrase-Level Recovery\n")
