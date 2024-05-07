@@ -30,7 +30,9 @@ examples_wrong_syntax = {
     0: 'http://google.',
     1: 'mailto::lucien',
     2: 'telnet://vanhohenheim',
-    3: 'http://website.com?search/wrongorder',
+    # todo: idea: + instead of / in 3
+    3: 'http://website.com?search/wrongorder',  # 3 -- ?search/wrongorder -> ?searchwrongorder
+    '3.1': 'http://w.c?s/w',
     4: 'ftp://lucien:@hostport',
     5: 'ftp://lucien:password',
     6: 'http://hostname:port',
