@@ -243,11 +243,12 @@ dfa = DFA(
     final_states={'qA', 'qZly'}
 )
 
-# todo: zotavenie 1 == odstranenie chybneho znaku (break -> continue)
-# todo: zotavenie 2 == doplnenie chybajuceho znaku (http:/google.com -> http://google.com)
-# todo: vypinac / zapinac zotaveni
-# todo: break out of the loop immediately when we stumble upon qZly (so it doesn't run til the end of the string)
+# todo: poriesit legible prints + print flag
 
+def reject_input(tokens):
+    print("Rejected")
+    print(f"Tokens: {tokens}")
+    return None, 'qZly'  # return next_state, current_state
 
 def tokenize(user_input, dfa, recovery_mode=None):
     if recovery_mode:
@@ -256,52 +257,99 @@ def tokenize(user_input, dfa, recovery_mode=None):
     else:
         print("Zotavovanie z chyb je vypnute")
     tokens = []
-    #user_input = int(input('Please enter the example id: '))
-    #user_input = examples_correct[user_input]
+    
     current_state = 'q0'
     current_token = ''
+
     for symbol in user_input:
         print("Currently reading: " + symbol)
+
+        # check if a symbol is valid
         if symbol in dfa.input_symbols:
             next_state = dfa.transitions[current_state].get(symbol)
             print("Current state: " + current_state)
             print("Next state: " + next_state)
+
         else:
             #if current_token != '':
             #    tokens.append(current_token)
 
             print("Invalid symbol found: " + symbol)
+
+            # ! ERROR RECOVERY MODE 1 -- preskocenie chybnych znakov (nie je v input_symbols)
             if recovery_mode == "ignore":
                 print("Skipping incorrect symbol...")
                 print(f"Tokens: {tokens}")
                 continue
             else:
-                next_state = None
-                current_state = 'qZly'
-                print("Rejected")
-                print(f"Tokens: {tokens}")
+                next_state, current_state = reject_input(tokens)
                 break
             
-        if next_state is not None: # kym stale citame vstup 
+        # check if we didn't get into an invalid state (qZly) -- kym stale citame vstup
+        if next_state is not None:
 
-            if next_state != 'qA': # citame protokol az kym nenarazime na qA
-                print(f"next state: {current_state} --- Appendujeme")
-                current_token += symbol # znaky protokolu appendujeme do current_token
-                print(current_token)
-            
+            # ! ERROR RECOVERY MODE 1 -- preskocenie chybnych znakov (nie je v protokole)
+            if next_state == 'qZly':
+                if recovery_mode == 'ignore':
+                    continue
+                else:
+                    break
+
+            # citame protokol az kym nenarazime na qA
+            if next_state != 'qA':
+                print(f'YAY != qA')
+                print(f'current token: {current_token}')
+
+                # ! ERROR RECOVERY MODE 2 - insert pridanie chybajuce znaku do protocolu
+                # ak sme v qCOLON a next je qZLY, tak pridame / a pokracujeme... nieco na ten styl? 
+                if recovery_mode == "insert":
+                    print(f'we\'re in INSERT')
+
+                    # while next_state == 'qZly' or next_state != 'qA':
+                    while next_state == 'qZly' and current_state != None: 
+                        print(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
+                        if current_state == 'qM6':
+                            current_token += ':'
+                            current_state = 'qCOLONmailto'
+                        elif current_state == 'qH4':
+                            current_token += ':'
+                            current_state = 'qCOLON'
+                        elif current_state == 'qCOLON':
+                            current_token += '/'
+                            current_state = 'qSLASH'
+                        elif current_state == 'qSLASH':
+                            current_token += '/'
+                            current_state = 'qA'
+                        else:
+                            next_state, current_state = reject_input(tokens)
+                            break
+                        next_state = dfa.transitions[current_state].get(symbol)
+                        print(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
+
+                    # current_token += symbol   
+                    if next_state == 'qA':
+                        tokens.append(current_token)
+                    elif next_state == None:
+                        break
+                    else:
+                        current_token += symbol
+
+                else:
+                    print(f"'next state': {current_state} / next state: {next_state} --- Appendujeme")
+                    current_token += symbol # znaky protokolu appendujeme do current_token
+                    print(current_token)
+
+            # we've finished reading the protocol  
             if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA': # precitali sme protokol, znaky ulozime ako jeden token
+                print('WOAH colonmailto slash')
                 print("Precitali sme protokol")
                 current_token += symbol
-                tokens.append(current_token) 
+                tokens.append(current_token)
                 print(f"Tokens: {tokens}")
                 current_token = ''
-            
-            # error recovery mode 2 - insert pridanie chybajuce znaku do protocolu
-            # ak sme v qCOLON a next je qZLY, tak pridame / a pokracujeme... nieco na ten styl? 
-            # if recovery_mode == "insert":
-            #   pass 
         
             elif next_state == 'qA': # uz sme precitali protokol a uz len citame jednotlive znaky a ukladame ich po jednom ako tokeny 
+                print('NOU == qA')
                 print("next_state == qA, Tokenizujeme")
                 tokens.append(symbol)
                 print(f"Tokens: {tokens}")
