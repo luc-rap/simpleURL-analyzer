@@ -206,7 +206,7 @@ dfa = DFA(
 
 
 def reject_input(tokens):
-    print("Input rejected")
+    log.error("Input rejected")
     log.info(f"Tokens: {tokens}")
     return None, 'qZly'  # return next_state, current_state
 
@@ -330,5 +330,5 @@ def tokenize(user_input, dfa, recovery_mode=None):
         return tokens
     
     else:
-        print("Input rejected")
+        log.error("Input rejected")
         return None
