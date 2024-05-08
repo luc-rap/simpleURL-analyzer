@@ -32,6 +32,9 @@ def get_terminal(current_token):
 
     elif current_token == '$':
         return '$'
+    
+    elif current_token in terminals_symbols.values():
+        return current_token
 
     else:
         return 'something has gone horribly wrong o_o'
@@ -52,7 +55,6 @@ def parse(input_tokens, recovery_mode=None):
     current_token = input_tokens.pop(0)  # ktory token prave citame zo vstupu:
 
     accepted_tokens = []
-    accepted_tokens.append(current_token)
 
     print(f'INITIAL INFO\nstack - {str(stack)} / token - {current_token}')
 
@@ -87,6 +89,8 @@ def parse(input_tokens, recovery_mode=None):
             top = stack.pop()
             print(f'Skipping...\n Top: {top} --- Stack: {str(stack)} --- Token: {token}')
         
+        print(f'INPUT TOKENS ---- {input_tokens}')
+
         # we've reached the bottom of the stack and ran out of input tokens :)
         if top == 'Z0' and not input_tokens:
             print('Accepted :)')
@@ -99,18 +103,51 @@ def parse(input_tokens, recovery_mode=None):
             if recovery_mode == 'panic':
                 print('we panic')
                     
-                while token not in parsing_table[top] and input_tokens:
+                while (top not in parsing_table or token not in parsing_table[top]) and input_tokens:
                     print(f'RECOVERY BEFORE - token - {token} / current - {current_token} / input tokens: {input_tokens}')
+                    print(f'Top: {top} --- Stack: {str(stack)}')
                     current_token = input_tokens.pop(0)
                     token = get_terminal(current_token)
                     print(f'RECOVERY AFTER - token - {token} / current - {current_token} / input tokens: {input_tokens}')
+                    print(f'Top: {top} --- Stack: {str(stack)}')
             
-            if not recovery_mode or not input_tokens:
+            # ! ERROR RECOVERY MODE 4 - doplnenie chybajuceho znaku
+            elif recovery_mode == 'phrase':
+                print('we phase')
+
+                # ak nemame dalsi vstup (zostal nam v input_tokens iba '$')
+                # a zostal nam terminal na vrchu zasobnika (napr. /) tak ten terminal doplnime
+                if current_token == '$' and top in terminals_symbols.values():
+                    
+                    # find the actual character for the specific terminal token
+                    terminals_keys = list(terminals_symbols.keys())
+                    terminals_values = list(terminals_symbols.values())
+                    
+                    pos = terminals_values.index(top)
+                    
+                    print(terminals_keys[pos])
+                    input_tokens.insert(0, terminals_keys[pos])
+                    input_tokens.append('$')
+
+                    current_token = input_tokens.pop(0) 
+
+                    stack.append(top)
+                    print(f'stack - {stack}')
+                    
+                    print(f'RECOVERY PHRASE AFTER -  token - {token} / current - {current_token} / input tokens: {input_tokens}')
+                    continue
+
+
+            
+            # if not recovery_mode or not input_tokens:
+            if top not in parsing_table or token not in parsing_table[top]:
                 print(f'input tokens {input_tokens}')
+                print(f'IN REJECTION token - {token} / current - {current_token} / input tokens: {input_tokens}')
+                print(f'Top: {top} --- Stack: {str(stack)}')
                 print('Rejected')
                 print(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
                 break
-        
+    
         rule_number = parsing_table[top][token]
         rule = rules[rule_number - 1]
         print(f'RULES\nTop - {top} / Token - {token} / Rule number - {rule_number} / Rule - {rule}')
