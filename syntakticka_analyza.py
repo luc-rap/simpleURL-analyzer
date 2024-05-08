@@ -1,6 +1,10 @@
 from collections import deque
 from pravidla import * 
 
+# pip install treelib
+# tree visualizer from graphviz output: https://dreampuf.github.io/
+from treelib import Node, Tree
+
 examples_wrong_syntax = {
     0: ['http://', 'g', 'o', 'o', 'g', 'l', 'e', '.'],
     1: ['mailto::', 'l', 'u', 'c', 'i', 'e', 'n'],
@@ -50,6 +54,10 @@ def parse(input_tokens, recovery_mode=None):
     start = 'url'
     stack.append('Z0') # spodok zasobnika
     stack.append(start) # startovaci symbol
+
+    syntax_tree = Tree()
+    syntax_tree.add_node(Node(start, str(start) + str(parsing_table_tree_counters[start])))
+    parsing_table_tree_counters[start] += 1
 
     input_tokens.append('$')
     current_token = input_tokens.pop(0)  # ktory token prave citame zo vstupu:
@@ -132,6 +140,9 @@ def parse(input_tokens, recovery_mode=None):
                     current_token = input_tokens.pop(0) 
 
                     stack.append(top)
+                    syntax_tree.add_node(Node(top, str(top) + str(parsing_table_tree_counters[top])), 
+                                         parent=str(top) + str(parsing_table_tree_counters[top] - 1))
+                    parsing_table_tree_counters[top] += 1
                     print(f'stack - {stack}')
                     
                     print(f'RECOVERY PHRASE AFTER -  token - {token} / current - {current_token} / input tokens: {input_tokens}')
@@ -155,15 +166,26 @@ def parse(input_tokens, recovery_mode=None):
         # add a specific alphanumeric character instead of the first one of terminals_alpha or terminals_digits
         if rule == terminals_alpha or rule == terminals_digits:
             stack.append(token)
+            syntax_tree.add_node(Node(current_token), 
+                                 parent=str(top) + str(parsing_table_tree_counters[top] - 1))
+            # parsing_table_tree_counters[token] += 1
+            # syntax_tree.add_node(Node(token, token), parent=top)
 
         # don't add an epsilon to stack if it's an epsilon rule
         elif rule == 'eps':
+            syntax_tree.add_node(Node('eps'), 
+                                 parent=str(top) + str(parsing_table_tree_counters[top] - 1))
             continue
 
         # split the rule into mulitple strings if it's not just one
         else:
             rule = rule.split(' ')
             rule.reverse()  # reverse the rules because it's a stack
+            for r in rule:
+                # syntax_tree.add_node((Node(r, r)), parent=top)
+                syntax_tree.add_node(Node(r, str(r) + str(parsing_table_tree_counters[r])), 
+                                 parent=str(top) + str(parsing_table_tree_counters[top] - 1))
+                parsing_table_tree_counters[r] += 1
             stack.extend(rule)
 
         print(f'Current stack: {str(stack)}')
@@ -175,5 +197,9 @@ def parse(input_tokens, recovery_mode=None):
         # todo: ? remove $ from accepted_tokens
         print(f'Accepted tokens: {accepted_tokens}')
 
-    print(f'we\'re at the end of the function yay yippee')
-    
+    print(f'we\'re at the end of the function yay yippee\n')
+    print(syntax_tree.show(stdout=False))
+
+    # todo: mention the ordering=out (in tree.py) in docu
+    # todo: mention it's read from right to left
+    syntax_tree.to_graphviz(filename='syntax-tree-rec-4', shape=u'circle', graph=u'digraph')
