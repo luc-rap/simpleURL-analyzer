@@ -266,7 +266,8 @@ def tokenize(user_input, dfa, recovery_mode=None):
     current_token = ''
 
     for symbol in user_input:
-        print("Currently reading: " + symbol)
+        print("---\nCurrently reading: " + symbol)
+        print(f'current token: {current_token}')
 
         # check if a symbol is valid
         if symbol in dfa.input_symbols:
@@ -296,6 +297,8 @@ def tokenize(user_input, dfa, recovery_mode=None):
             if next_state == 'qZly':
                 if recovery_mode == 'ignore':
                     continue
+                elif recovery_mode == 'insert':
+                    pass
                 else:
                     break
 
@@ -315,15 +318,23 @@ def tokenize(user_input, dfa, recovery_mode=None):
                         if current_state == 'qM6':
                             current_token += ':'
                             current_state = 'qCOLONmailto'
-                        elif current_state == 'qH4':
+
+                        elif current_state in ['qH4','qT6', 'qF3']:
                             current_token += ':'
                             current_state = 'qCOLON'
+
                         elif current_state == 'qCOLON':
                             current_token += '/'
                             current_state = 'qSLASH'
+
+                        elif current_state == 'qCOLONmailto':
+                            current_token += ':'
+                            current_state = 'qA'
+
                         elif current_state == 'qSLASH':
                             current_token += '/'
                             current_state = 'qA'
+
                         else:
                             next_state, current_state = reject_input(tokens)
                             break
