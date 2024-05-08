@@ -1,0 +1,138 @@
+digraph tree {
+	"url0" [label="url", shape=circle, ordering=out]
+	"httpaddress0" [label="httpaddress", shape=circle, ordering=out]
+	"hostport0" [label="hostport", shape=circle, ordering=out]
+	"http0" [label="http", shape=circle, ordering=out]
+	"httpaddr_10" [label="httpaddr_1", shape=circle, ordering=out]
+	"hostname0" [label="hostname", shape=circle, ordering=out]
+	"hostport_10" [label="hostport_1", shape=circle, ordering=out]
+	"httpaddr_20" [label="httpaddr_2", shape=circle, ordering=out]
+	"path0" [label="path", shape=circle, ordering=out]
+	"slash0" [label="slash", shape=circle, ordering=out]
+	"hostname_10" [label="hostname_1", shape=circle, ordering=out]
+	"xalphas0" [label="xalphas", shape=circle, ordering=out]
+	"c80a6bab-0d3d-11ef-a959-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"c80a6bae-0d3d-11ef-be2c-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"path_10" [label="path_1", shape=circle, ordering=out]
+	"segment0" [label="segment", shape=circle, ordering=out]
+	"dot0" [label="dot", shape=circle, ordering=out]
+	"hostname1" [label="hostname", shape=circle, ordering=out]
+	"xalpha0" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_10" [label="xalphas_1", shape=circle, ordering=out]
+	"c80a6bad-0d3d-11ef-97e4-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"c80a6bac-0d3d-11ef-8c1d-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"hostname_11" [label="hostname_1", shape=circle, ordering=out]
+	"xalphas6" [label="xalphas", shape=circle, ordering=out]
+	"alpha0" [label="alpha", shape=circle, ordering=out]
+	"xalphas1" [label="xalphas", shape=circle, ordering=out]
+	"c80a6baa-0d3d-11ef-aa15-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"xalpha6" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_16" [label="xalphas_1", shape=circle, ordering=out]
+	"c8044a88-0d3d-11ef-965a-cc5ef82ea338" [label="g", shape=circle, ordering=out]
+	"xalpha1" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_11" [label="xalphas_1", shape=circle, ordering=out]
+	"alpha6" [label="alpha", shape=circle, ordering=out]
+	"xalphas7" [label="xalphas", shape=circle, ordering=out]
+	"alpha1" [label="alpha", shape=circle, ordering=out]
+	"xalphas2" [label="xalphas", shape=circle, ordering=out]
+	"c807fab6-0d3d-11ef-8852-cc5ef82ea338" [label="c", shape=circle, ordering=out]
+	"xalpha7" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_17" [label="xalphas_1", shape=circle, ordering=out]
+	"c80582f8-0d3d-11ef-82a7-cc5ef82ea338" [label="o", shape=circle, ordering=out]
+	"xalpha2" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_12" [label="xalphas_1", shape=circle, ordering=out]
+	"alpha7" [label="alpha", shape=circle, ordering=out]
+	"xalphas8" [label="xalphas", shape=circle, ordering=out]
+	"alpha2" [label="alpha", shape=circle, ordering=out]
+	"xalphas3" [label="xalphas", shape=circle, ordering=out]
+	"c8093357-0d3d-11ef-9282-cc5ef82ea338" [label="o", shape=circle, ordering=out]
+	"xalpha8" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_18" [label="xalphas_1", shape=circle, ordering=out]
+	"c806bd6d-0d3d-11ef-bdbf-cc5ef82ea338" [label="o", shape=circle, ordering=out]
+	"xalpha3" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_13" [label="xalphas_1", shape=circle, ordering=out]
+	"alpha8" [label="alpha", shape=circle, ordering=out]
+	"c80a6ba9-0d3d-11ef-8b81-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"alpha3" [label="alpha", shape=circle, ordering=out]
+	"xalphas4" [label="xalphas", shape=circle, ordering=out]
+	"c8093358-0d3d-11ef-add5-cc5ef82ea338" [label="m", shape=circle, ordering=out]
+	"c806c204-0d3d-11ef-9858-cc5ef82ea338" [label="g", shape=circle, ordering=out]
+	"xalpha4" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_14" [label="xalphas_1", shape=circle, ordering=out]
+	"alpha4" [label="alpha", shape=circle, ordering=out]
+	"xalphas5" [label="xalphas", shape=circle, ordering=out]
+	"c806c205-0d3d-11ef-8884-cc5ef82ea338" [label="l", shape=circle, ordering=out]
+	"xalpha5" [label="xalpha", shape=circle, ordering=out]
+	"xalphas_15" [label="xalphas_1", shape=circle, ordering=out]
+	"alpha5" [label="alpha", shape=circle, ordering=out]
+	"c807fab5-0d3d-11ef-b777-cc5ef82ea338" [label="eps", shape=circle, ordering=out]
+	"c807fab4-0d3d-11ef-b58d-cc5ef82ea338" [label="e", shape=circle, ordering=out]
+
+	"url0" -> "httpaddress0"
+	"httpaddress0" -> "httpaddr_10"
+	"httpaddress0" -> "hostport0"
+	"httpaddress0" -> "http0"
+	"hostport0" -> "hostport_10"
+	"hostport0" -> "hostname0"
+	"httpaddr_10" -> "httpaddr_20"
+	"httpaddr_10" -> "path0"
+	"httpaddr_10" -> "slash0"
+	"hostname0" -> "hostname_10"
+	"hostname0" -> "xalphas0"
+	"hostport_10" -> "c80a6bab-0d3d-11ef-a959-cc5ef82ea338"
+	"httpaddr_20" -> "c80a6bae-0d3d-11ef-be2c-cc5ef82ea338"
+	"path0" -> "path_10"
+	"path0" -> "segment0"
+	"hostname_10" -> "hostname1"
+	"hostname_10" -> "dot0"
+	"xalphas0" -> "xalphas_10"
+	"xalphas0" -> "xalpha0"
+	"path_10" -> "c80a6bad-0d3d-11ef-97e4-cc5ef82ea338"
+	"segment0" -> "c80a6bac-0d3d-11ef-8c1d-cc5ef82ea338"
+	"hostname1" -> "hostname_11"
+	"hostname1" -> "xalphas6"
+	"xalpha0" -> "alpha0"
+	"xalphas_10" -> "xalphas1"
+	"hostname_11" -> "c80a6baa-0d3d-11ef-aa15-cc5ef82ea338"
+	"xalphas6" -> "xalphas_16"
+	"xalphas6" -> "xalpha6"
+	"alpha0" -> "c8044a88-0d3d-11ef-965a-cc5ef82ea338"
+	"xalphas1" -> "xalphas_11"
+	"xalphas1" -> "xalpha1"
+	"xalpha6" -> "alpha6"
+	"xalphas_16" -> "xalphas7"
+	"xalpha1" -> "alpha1"
+	"xalphas_11" -> "xalphas2"
+	"alpha6" -> "c807fab6-0d3d-11ef-8852-cc5ef82ea338"
+	"xalphas7" -> "xalphas_17"
+	"xalphas7" -> "xalpha7"
+	"alpha1" -> "c80582f8-0d3d-11ef-82a7-cc5ef82ea338"
+	"xalphas2" -> "xalphas_12"
+	"xalphas2" -> "xalpha2"
+	"xalpha7" -> "alpha7"
+	"xalphas_17" -> "xalphas8"
+	"xalpha2" -> "alpha2"
+	"xalphas_12" -> "xalphas3"
+	"alpha7" -> "c8093357-0d3d-11ef-9282-cc5ef82ea338"
+	"xalphas8" -> "xalphas_18"
+	"xalphas8" -> "xalpha8"
+	"alpha2" -> "c806bd6d-0d3d-11ef-bdbf-cc5ef82ea338"
+	"xalphas3" -> "xalphas_13"
+	"xalphas3" -> "xalpha3"
+	"xalpha8" -> "alpha8"
+	"xalphas_18" -> "c80a6ba9-0d3d-11ef-8b81-cc5ef82ea338"
+	"xalpha3" -> "alpha3"
+	"xalphas_13" -> "xalphas4"
+	"alpha8" -> "c8093358-0d3d-11ef-add5-cc5ef82ea338"
+	"alpha3" -> "c806c204-0d3d-11ef-9858-cc5ef82ea338"
+	"xalphas4" -> "xalphas_14"
+	"xalphas4" -> "xalpha4"
+	"xalpha4" -> "alpha4"
+	"xalphas_14" -> "xalphas5"
+	"alpha4" -> "c806c205-0d3d-11ef-8884-cc5ef82ea338"
+	"xalphas5" -> "xalphas_15"
+	"xalphas5" -> "xalpha5"
+	"xalpha5" -> "alpha5"
+	"xalphas_15" -> "c807fab5-0d3d-11ef-b777-cc5ef82ea338"
+	"alpha5" -> "c807fab4-0d3d-11ef-b58d-cc5ef82ea338"
+}
