@@ -1,5 +1,6 @@
 from collections import deque
 from pravidla import * 
+from treelib import Node, Tree
 
 examples_wrong_syntax = {
     0: ['http://', 'g', 'o', 'o', 'g', 'l', 'e', '.'],
@@ -48,6 +49,11 @@ def parse(input_tokens, recovery_mode=None):
         print("Zotavovanie z chyb je vypnute")
     stack = deque()
     start = 'url'
+    tree = Tree()
+    tree.create_node(start, 'start')  # root node
+    tree.add_node(Node('blabalala'), parent='start')
+    print(tree.show(stdout=False))
+    input()
     stack.append('Z0') # spodok zasobnika
     stack.append(start) # startovaci symbol
 
@@ -151,6 +157,7 @@ def parse(input_tokens, recovery_mode=None):
         rule_number = parsing_table[top][token]
         rule = rules[rule_number - 1]
         print(f'RULES\nTop - {top} / Token - {token} / Rule number - {rule_number} / Rule - {rule}')
+
 
         # add a specific alphanumeric character instead of the first one of terminals_alpha or terminals_digits
         if rule == terminals_alpha or rule == terminals_digits:
