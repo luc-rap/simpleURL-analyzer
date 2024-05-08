@@ -42,6 +42,8 @@ def main():
         print("Invalid parsing arguments. Exiting...")
         exit()
 
+    # todo: test if two recoveries work at the same time
+
     print("\n°˖✧ Lexical and syntax analyzer ✧˖°\n")
     while True:
         try:
