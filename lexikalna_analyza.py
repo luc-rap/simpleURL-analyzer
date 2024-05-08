@@ -32,7 +32,7 @@ examples_wrong_syntax = {
     2: 'telnet://vanhohenheim',
     # todo: idea: + instead of / in 3
     3: 'http://website.com?search/wrongorder',  # 3 -- ?search/wrongorder -> ?searchwrongorder
-    '3.1': 'http://w.c?s/w',
+    '3.1': 'http://w.c?s/a+b',  # zotavenie 3
     4: 'ftp://lucien:@hostport',
     5: 'ftp://lucien:password',
     6: 'http://hostname:port',

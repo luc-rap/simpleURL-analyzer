@@ -47,8 +47,13 @@ def parse(input_tokens, recovery_mode=None):
     start = 'url'
     stack.append('Z0') # spodok zasobnika
     stack.append(start) # startovaci symbol
+
     input_tokens.append('$')
     current_token = input_tokens.pop(0)  # ktory token prave citame zo vstupu:
+
+    accepted_tokens = []
+    accepted_tokens.append(current_token)
+
     print(f'INITIAL INFO\nstack - {str(stack)} / token - {current_token}')
 
     #! current_token = ktory token prave citame zo vstupu
@@ -69,7 +74,9 @@ def parse(input_tokens, recovery_mode=None):
 
             # read the next token from the input string
             if input_tokens:
+                accepted_tokens.append(current_token)
                 current_token = input_tokens.pop(0)
+                print(f'accepted tokens: {accepted_tokens} -----------')
                 token = get_terminal(current_token)
                 print(f'Current token (if input tokens exist): {token}')
             else:
@@ -91,24 +98,19 @@ def parse(input_tokens, recovery_mode=None):
             # ! ERROR RECOVERY MODE 3 - skip characters unti
             if recovery_mode == 'panic':
                 print('we panic')
-                # if top == 'search_1':  # because we might want to do specific stuff for specific rules ??
                     
                 while token not in parsing_table[top] and input_tokens:
-                    print(f'token - {token} / current - {current_token} / input tokens: {input_tokens}')
+                    print(f'RECOVERY BEFORE - token - {token} / current - {current_token} / input tokens: {input_tokens}')
                     current_token = input_tokens.pop(0)
                     token = get_terminal(current_token)
-                print('we stopped panic')
-                # continue
+                    print(f'RECOVERY AFTER - token - {token} / current - {current_token} / input tokens: {input_tokens}')
             
-            # todo: this is changed jic
             if not recovery_mode or not input_tokens:
                 print(f'input tokens {input_tokens}')
                 print('Rejected')
                 print(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
                 break
         
-        print('after recoveryyyyyyyyyyyyyyyyyyyy')
-
         rule_number = parsing_table[top][token]
         rule = rules[rule_number - 1]
         print(f'RULES\nTop - {top} / Token - {token} / Rule number - {rule_number} / Rule - {rule}')
@@ -132,6 +134,9 @@ def parse(input_tokens, recovery_mode=None):
         
     if not input_tokens and stack:
         print("Rejected")
+    else:
+        # todo: ? remove $ from accepted_tokens
+        print(f'Accepted tokens: {accepted_tokens}')
 
     print(f'we\'re at the end of the function yay yippee')
     
