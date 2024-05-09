@@ -1,5 +1,5 @@
 from collections import deque
-from pravidla import * 
+from rules import * 
 import logging as log
 
 # pip install treelib
@@ -132,7 +132,8 @@ def parse(input_tokens, file_name, recovery_mode=None):
             # if not recovery_mode or not input_tokens:
             if top not in parsing_table or token not in parsing_table[top]:
                 log.error('Rejected')
-                log.error(f'Rule was not found in the parsing table\nTop: {top} --- Token: {token} --- Stack: {str(stack)}')
+                log.error(f'Rule was not found in the parsing table')
+                log.info(f'Top: {top} --- Token: {token} --- Stack: {str(stack)}')
                 break
     
         rule_number = parsing_table[top][token]
@@ -156,7 +157,6 @@ def parse(input_tokens, file_name, recovery_mode=None):
             rule = rule.split(' ')
             rule.reverse()  # reverse the rules because it's a stack
             for r in rule:
-                # syntax_tree.add_node((Node(r, r)), parent=top)
                 syntax_tree.add_node(Node(r, str(r) + str(parsing_table_tree_counters[r])), 
                                  parent=str(top) + str(parsing_table_tree_counters[top] - 1))
                 parsing_table_tree_counters[r] += 1
@@ -167,14 +167,11 @@ def parse(input_tokens, file_name, recovery_mode=None):
         
     if not input_tokens and stack:
         log.error("Input rejected")
-    else:
-        print(f'Accepted tokens: {accepted_tokens}')
+    print(f'Accepted tokens: {accepted_tokens}')
 
     log.info("Finished")
     log.info(f'\n{syntax_tree.show(stdout=False)}')
 
-    # todo: mention the ordering=out (in tree.py) in docu
-    # todo: mention it's read from right to left
     if file_name:
         syntax_tree.to_graphviz(filename=file_name, shape=u'circle', graph=u'digraph')
         log.info(f'Saved syntax tree output to {file_name}')

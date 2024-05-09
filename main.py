@@ -1,9 +1,9 @@
-from syntakticka_analyza import *
-from lexikalna_analyza import *
+from syntax_analysis import *
+from lexical_analysis import *
 import argparse
 import logging as log
 
-# priklad vstupu:
+# input example:
 # main.py -lex 1 -syn 0 -f syntax_tree_data - v
 # main.py -h / main.py --help 
 
@@ -47,7 +47,7 @@ def main():
     print("\n°˖✧ Lexical and syntax analyzer ✧˖°\n")
     while True:
         try:
-            vstup = input("Type INPUT or PRESS CTRL + C to exit the program: ")
+            vstup = input("\nType INPUT or PRESS CTRL + C to exit the program: ")
 
             print("\nTOKENIZER\n")
             tokens = tokenize(vstup, dfa, recovery_mode='ignore' if lex_recovery == 1 else 'insert' if lex_recovery == 2 else None)
