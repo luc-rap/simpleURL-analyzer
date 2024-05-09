@@ -19,8 +19,13 @@ options:
   -v, --verbose         Verbose Mode
 ````
 
+Program launch example:
+````
+main.py -lex 1 -syn 0 -f syntax_tree_data - v
+````
+
 Functions: 
-1. rules.py contains a list of terminal and non-terminal symbols, a table of transitions and a list of rules. We used a dictionary data structure to represent the parsing table 
-3. syntax_analysis.py uses stack for lexical analysis
-2. lexical_analysis.py uses DFA for tokenization
-4. main.py is used to run the main program
+1. `rules.py` contains a list of terminal and non-terminal symbols, a table of transitions and a list of rules. We used a dictionary data structure to represent the parsing table 
+2. `syntax_analysis.py` uses stack for lexical analysis
+3. `lexical_analysis.py` uses DFA for tokenization
+4. `main.py` is used to run the main program

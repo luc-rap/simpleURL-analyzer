@@ -1,0 +1,2 @@
+automata_lib==8.3.0
+treelib==1.7.0
