@@ -21,7 +21,7 @@ options:
 
 Program launch example:
 ````
-main.py -lex 1 -syn 0 -f syntax_tree_data - v
+main.py -lex 1 -syn 0 -f syntax_tree_data -v
 ````
 
 Functions: 
