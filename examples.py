@@ -13,7 +13,13 @@ examples_correct = {
     10: 'http://hostname:12345',
     11: 'telnet://lucien:password@vanhohenheim:13111988',
     13: 'http://softverovejazyky:2324/su/najlepsi/predmet/na/svete/frfr',
-    14: 'ftp://lucien@vanhohenheim.fr/islands/'
+    14: 'ftp://lucien@vanhohenheim.fr/islands/',
+    15: 'ftp://username:password@ftp.example.com/',
+    16: 'ftp://username:password@ftp.example.com:21',
+    17: 'mailto::example@example.com',
+    18: 'http://example.com/page1/page2',
+    19: 'http://example.com:8080/page',
+    20: 'telnet://username:password@example.com'
 }
 
 examples_wrong_lexical = {
@@ -21,7 +27,9 @@ examples_wrong_lexical = {
     1: 'http:/google.com',
     2: 'akjsdkfj',
     3: '°˖✧◝(⁰▿⁰)◜✧˖° ٩(｡•́‿•̀｡)۶ *:･ﾟ✧',   
-    4: 'telnet::lucien'
+    4: 'telnet::lucien',
+    5: 'mail@to///::lucien',
+    6: 'ft*p://login',
 }
 
 examples_wrong_syntax = {
@@ -38,6 +46,17 @@ examples_wrong_syntax = {
     8: 'telnet://lucien:password@vanhoheinheim:1311.1988',  # :3
     9: 'ftp://cantsearchthis.com/donttrythisathome?howtopassschoolandnotpassaway', # ftp ocakava :password alebo @ bez passwordu 
     10: 'ftp://lucien@vanhohenheim.fr', # 4 - chyba slash - mozeme pridat v recovery slash 
-    11: 'ftp://lucien:password@hostport' # 4 - chyba slash 
+    11: 'ftp://lucien:password@hostport', # 4 - chyba slash 
+    12: 'mailto::example@example.com?subject',  # v mailto nie je ?search
+    13: 'telnet://example.com:23',  # telnet potrebuje login a v logine je vzdy @hostname 
+    14: 'telnet://example.com',  # tiez ako 13
+    15: 'http://example.com:80:8080',  # viac portov po sebe nejde, 3 - preskoci :, port bude 808080
+    16: 'http://username:password@example.com',  # v http nie je ziadny login. : to este zoberie lebo to moze ocakavat iba port (digits) 
 }
-# ftp add slash
+
+examples_wrong_both = {
+    1: 'fttp://lucien@vh.fr',  # znak navyse (1) + chybajuci / (4)
+    2: 'htttp://google.com:abc80',  # znak navyse (1) + symboly navyse (3) (abc v porte nie su digits)
+    3: 'mailto:lucia@rapanova@.com',  # doplnenie chybajuceho : (2) + skip @  navyse (pred .com) (3)
+    4: 'ftp/examples@py',  # chybajuce znaky :/ (2) + chybajuci / na konci(4)
+}
