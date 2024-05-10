@@ -258,10 +258,7 @@ def tokenize(user_input, dfa, recovery_mode=None):
             if next_state != 'qA':
 
                 # ! ERROR RECOVERY MODE 2 - insert pridanie chybajuce znaku do protocolu
-                # ak sme v qCOLON a next je qZLY, tak pridame / a pokracujeme... nieco na ten styl? 
                 if recovery_mode == "insert":
-
-                    # while next_state == 'qZly' or next_state != 'qA':
                     while next_state == 'qZly' and current_state != None: 
                         log.info("In error recovery mode insert.\n(start of the while loop)")
                         log.info(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
