@@ -1,49 +1,6 @@
 # pip install automata-lib
 from automata.fa.dfa import DFA
-
-examples_correct = {
-    0: 'http://google',
-    1: 'http://google.com',
-    2: 'http://123sj.sk/path/file?search+hello',
-    3: 'ftp://lucien@vanhohenheim.fr/islands',
-    4: 'ftp://lucien:password@hostport/why',
-    5: 'http://fiit.stuba.sk',
-    6: 'telnet://lucia:password@gmail.com',
-    12: 'mailto::sofia@shatokhina',
-    7: 'mailto::lucia@rapanova.com',
-    8: 'http://abc.abc/whatever/whatever?hladanie+hladanie+zase',
-    9: 'http://youtu.be/dQw4w9WgXcQ',
-    10: 'http://hostname:12345',
-    11: 'telnet://lucien:password@vanhohenheim:13111988',
-    13: 'http://softverovejazyky:2324/su/najlepsi/predmet/na/svete/frfr',
-    14: 'ftp://lucien@vanhohenheim.fr/islands/'
-}
-
-examples_wrong_lexical = {
-    0: 'http:/',
-    1: 'http:/google.com',
-    2: 'akjsdkfj',
-    3: '°˖✧◝(⁰▿⁰)◜✧˖° ٩(｡•́‿•̀｡)۶ *:･ﾟ✧',   
-    4: 'telnet::lucien'
-}
-
-examples_wrong_syntax = {
-    0: 'http://google.', # rejectne lebo za bodkou musi byt aspon jeden alfanumericky znak
-    1: 'mailto::lucien', # zotavenie 4 doplni @, ale stale rejected, lebo chyba alfanumer. znak. bez zotavenia chyba @ tak rejectne
-    2: 'telnet://vanhohenheim', # lebo chyba login a zavinac hostport, nic to nebude recoverovat 
-    3: 'http://website.com?search/wrongorder',  # 3 - accepted (skpine /wrongorder lebo caka + alebo eps), 4 - rejected, nic sa nedoplni, nevie rozpoznat /
-    '3.1': 'http://w.c?s/a+b',  # zotavenie 3 preskoci slash a natrafi na + ktore vie akceptovat (cize pokracuje v citani od +), 4 rejectne, lebo nepozna /
-    4: 'ftp://lucien:@hostport',  # zotavenie 3 preskoci @ (kedze ocakava password po :), docita to hostport ale rejectne, lebo chyba @hostport/
-    '4.5': 'ftp://lucien:@hostport@nieco/', # zotavenie 3 preskorci @ a akceptuje vstup
-    5: 'ftp://lucien:password',  # 4 doplni @, ale stale to rejectne
-    6: 'http://hostname:port',  # nemozeme mat alphabeticky port
-    7: 'ftp://:lucien@gmail.com', # ftp preskoci : ale chyba slash tak to stale bude zle  (3) (3 - preskoci :, chyba slash, 4 - : navyse)
-    8: 'telnet://lucien:password@vanhoheinheim:1311.1988',  # :3
-    9: 'ftp://cantsearchthis.com/donttrythisathome?howtopassschoolandnotpassaway', # ftp ocakava :password alebo @ bez passwordu 
-    10: 'ftp://lucien@vanhohenheim.fr', # 4 - chyba slash - mozeme pridat v recovery slash 
-    11: 'ftp://lucien:password@hostport' # 4 - chyba slash 
-}
-# ftp add slash
+import logging as log
 
 
 dfa = DFA(
@@ -247,44 +204,39 @@ dfa = DFA(
     final_states={'qA', 'qZly'}
 )
 
-# todo: poriesit legible prints + print flag
 
 def reject_input(tokens):
-    print("Rejected")
-    print(f"Tokens: {tokens}")
+    log.error("Input rejected")
+    log.info(f"Tokens: {tokens}")
     return None, 'qZly'  # return next_state, current_state
 
 def tokenize(user_input, dfa, recovery_mode=None):
     if recovery_mode:
-        print("Zotavovanie z chyb je zapnute")
-        print(recovery_mode)
+        log.info(f"Error recovery is turned on: {recovery_mode}")
     else:
-        print("Zotavovanie z chyb je vypnute")
+        log.info("Error recovery is turned off")
     tokens = []
     
     current_state = 'q0'
     current_token = ''
 
     for symbol in user_input:
-        print("---\nCurrently reading: " + symbol)
-        print(f'current token: {current_token}')
+        log.info('\n')
+        log.info(f"Currently reading: {symbol}, current_token: {current_token}")
 
         # check if a symbol is valid
         if symbol in dfa.input_symbols:
             next_state = dfa.transitions[current_state].get(symbol)
-            print("Current state: " + current_state)
-            print("Next state: " + next_state)
+            log.info(f"Current state: {current_state}")
+            log.info(f"Next state: {next_state}")
 
         else:
-            #if current_token != '':
-            #    tokens.append(current_token)
-
-            print("Invalid symbol found: " + symbol)
+            log.warning("Invalid symbol found: " + symbol)
 
             # ! ERROR RECOVERY MODE 1 -- preskocenie chybnych znakov (nie je v input_symbols)
             if recovery_mode == "ignore":
-                print("Skipping incorrect symbol...")
-                print(f"Tokens: {tokens}")
+                log.info("In error recovery mode ignore")
+                log.info("Skipping incorrect symbol...")
                 continue
             else:
                 next_state, current_state = reject_input(tokens)
@@ -304,17 +256,15 @@ def tokenize(user_input, dfa, recovery_mode=None):
 
             # citame protokol az kym nenarazime na qA
             if next_state != 'qA':
-                print(f'YAY != qA')
-                print(f'current token: {current_token}')
 
                 # ! ERROR RECOVERY MODE 2 - insert pridanie chybajuce znaku do protocolu
                 # ak sme v qCOLON a next je qZLY, tak pridame / a pokracujeme... nieco na ten styl? 
                 if recovery_mode == "insert":
-                    print(f'we\'re in INSERT')
 
                     # while next_state == 'qZly' or next_state != 'qA':
                     while next_state == 'qZly' and current_state != None: 
-                        print(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
+                        log.info("In error recovery mode insert.\n(start of the while loop)")
+                        log.info(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
                         if current_state == 'qM6':
                             current_token += ':'
                             current_state = 'qCOLONmailto'
@@ -338,8 +288,11 @@ def tokenize(user_input, dfa, recovery_mode=None):
                         else:
                             next_state, current_state = reject_input(tokens)
                             break
+                        
                         next_state = dfa.transitions[current_state].get(symbol)
-                        print(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
+                        log.info(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
+                        log.info('(end of the while loop)')
+
 
                     # current_token += symbol   
                     if next_state == 'qA':
@@ -350,34 +303,32 @@ def tokenize(user_input, dfa, recovery_mode=None):
                         current_token += symbol
 
                 else:
-                    print(f"'next state': {current_state} / next state: {next_state} --- Appendujeme")
+                    log.info("Appending protocol symbols")
+                    log.info(f"'next state': {current_state} / next state: {next_state}")
                     current_token += symbol # znaky protokolu appendujeme do current_token
-                    print(current_token)
+                    log.info(f'Appending: {symbol}')
+                    log.info(f'Current state: {current_state}')
 
             # we've finished reading the protocol  
             if current_state in ['qCOLONmailto', 'qSLASH'] and next_state == 'qA': # precitali sme protokol, znaky ulozime ako jeden token
-                print('WOAH colonmailto slash')
-                print("Precitali sme protokol")
+                log.info("Finished reading the protocol token")
                 current_token += symbol
                 tokens.append(current_token)
-                print(f"Tokens: {tokens}")
+                log.info(f"Tokens: {tokens}")
                 current_token = ''
         
             elif next_state == 'qA': # uz sme precitali protokol a uz len citame jednotlive znaky a ukladame ich po jednom ako tokeny 
-                print('NOU == qA')
-                print("next_state == qA, Tokenizujeme")
+                log.info("Tokenizing symbols...")
                 tokens.append(symbol)
-                print(f"Tokens: {tokens}")
+                log.info(f"Tokens: {tokens}")
                 current_token = ''
     
         current_state = next_state
             
     if current_state in ['qA']: # ak nemame dalsie znaky na vstupe a sme vo finalnom stave, tak sme skoncili a akceptujeme vstup ako spravny 
-        print(f"Input akceptovany - current_state == {current_state}")
+        print("Input accepted")
         return tokens
     
     else:
-        print("Input redžektovaný :(")
+        log.error("Input rejected")
         return None
-    
-                
