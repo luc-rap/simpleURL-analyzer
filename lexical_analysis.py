@@ -215,8 +215,8 @@ def tokenize(user_input, dfa, recovery_mode=None):
         log.info(f"Error recovery is turned on: {recovery_mode}")
     else:
         log.info("Error recovery is turned off")
+        
     tokens = []
-    
     current_state = 'q0'
     current_token = ''
 
@@ -245,7 +245,7 @@ def tokenize(user_input, dfa, recovery_mode=None):
         # check if we didn't get into an invalid state (qZly) -- kym stale citame vstup
         if next_state is not None:
 
-            # ! ERROR RECOVERY MODE 1 -- preskocenie chybnych znakov (nie je v protokole)
+            # ! ERROR RECOVERY MODE 1 -- preskocenie chybnych znakov (znaky su v input symbols, ale nie su ocakavane v protokole)
             if next_state == 'qZly':
                 if recovery_mode == 'ignore':
                     continue
@@ -290,8 +290,6 @@ def tokenize(user_input, dfa, recovery_mode=None):
                         log.info(f'symbol - {symbol} / current state = {current_state} / next_state = {next_state} / current_toekn = {current_token}')
                         log.info('(end of the while loop)')
 
-
-                    # current_token += symbol   
                     if next_state == 'qA':
                         tokens.append(current_token)
                     elif next_state == None:
