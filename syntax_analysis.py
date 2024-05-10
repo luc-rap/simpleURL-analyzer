@@ -9,11 +9,10 @@ from treelib import Node, Tree
 
 # get teminal symbol from the token using terminals_symbols dictionary -- either a terminal or "name"
 def get_terminal(current_token):
+
     if current_token in terminals_symbols:
         return terminals_symbols[current_token]
 
-    # our tokens are protocols + symbols + "name"
-    # protocols + symbols are in terminals_symbols (and all tokens here are valid) => the other symbol must be "name"
     elif current_token in terminals_digits:
         return 'number'
     
@@ -29,7 +28,6 @@ def get_terminal(current_token):
     else:
         return 'something has gone horribly wrong o_o'
     
-
 def parse(input_tokens, file_name, recovery_mode=None):
     if recovery_mode:
         log.info(f"Error recovery is turned on: {recovery_mode}")
@@ -83,7 +81,7 @@ def parse(input_tokens, file_name, recovery_mode=None):
             top = stack.pop()
             log.info(f'Skipping...\n Top: {top} --- Stack: {str(stack)} --- Token: {token}')
 
-        # we've reached the bottom of the stack and ran out of input tokens :)
+        # we've reached the bottom of the stack and ran out of input tokens
         if top == 'Z0' and not input_tokens:
             print('Input accepted')
             break
@@ -91,7 +89,7 @@ def parse(input_tokens, file_name, recovery_mode=None):
         # get the rule from the rules dictionary
         # if rule_number = parsing_table[top][token] doesn't exist, it means the input is invalid
         if top not in parsing_table or token not in parsing_table[top]:
-            # ! ERROR RECOVERY MODE 3 - skip characters unti
+            # ! ERROR RECOVERY MODE 3 - skip characters until we find a match
             if recovery_mode == 'panic':
                 log.info('In Panic Mode Recovery')
                     
